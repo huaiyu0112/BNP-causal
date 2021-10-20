@@ -11,4 +11,4 @@ model_obj = createModel(data_obj)
 result_obj = multipleImp(data_obj, model_obj, n_burnin, m_Imp, interval_btw_Imp, show_iter=FALSE)
 ```
 
-The authors used seperate R files to run simualtion study. Each iteration of simulation consisits of 6 steps: (1) "data generation process", (2) "introducing missingness", (3)"making causal inference using BNP method in a before deletion dataset", (4) "making causal inference using BNP method in a missing at random dataset", (5) "implementing MICE + existing methods in a missing at random dataset", and (6) "implementing existing methods in a missing at random dataset". 
+The authors used seperate R files to run simualtion study. Each iteration of simulation consisits of 6 steps: (1) "data generation process", (2) "introducing missingness", (3) "implementing BNP method in a before deletion dataset", (4) "implementing BNP method in a missing at random dataset", (5) "implementing MICE + existing methods in a missing at random dataset", and (6) "implementing existing methods in a missing at random dataset". 

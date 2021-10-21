@@ -32,7 +32,7 @@ for (i in 1:n_sample){
 prob_L6 = expit_fn(0.5+L1_4[ ,3]*0.2)
 L6 = rbinom(n=n_sample, size=1, prob=prob_L6)
 L1_6 = cbind(L1_4, L5, L6)
-# Generate treatment indicator A
+# Generate treatment indicator A given covariates 
 prob_temp = expit_fn(0.3 *(L1_4[,1]+L1_4[,2]+L1_4[,3]+L1_4[,4])+0.2*ifelse(L5==1, 1, 0) +0.1*ifelse(L5==3, 1, 0) - 0.3*ifelse(L6==1, 1, 0))
 A = rbinom(n=n_sample, size=1, prob=prob_temp)
 # Generate potential outcomes Y0 and Y1

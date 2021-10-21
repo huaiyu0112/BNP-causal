@@ -15,6 +15,7 @@ sessionInfo()
 set.seed(100)
 # Inverse of the logit function
 expit_fn = function(x) { 1/(1+exp(-x)) } 
+
 ###############################################
 ########## Simulated data #####################
 ###############################################
@@ -22,7 +23,7 @@ expit_fn = function(x) { 1/(1+exp(-x)) }
 ATE_true = 1.5
 # Define number of observations for each dataset 
 n_sample = 500
-# Four continuous confounders 
+# Four continuous covariates which were distributed as multivaraite normal with mean mu_L1_4 and covariance Sigma_L1_4
 mu_L1_4 = rep(0,4)
 Sigma_L1_4 = matrix(c(1, 0.3, 0.3, 0.3,                
                       0.3, 1, 0.3, 0.3, 
@@ -33,28 +34,24 @@ dimnames(L1_4)[[2]] = c("L1","L2","L3","L4")
 # Two cateogrical confounders
 L5 = rep(0,n_sample)
 for (i in 1:n_sample){
-  L5[i]= sample.int(3, size = 1, prob = c(0.5+L1_4[i,1]*0.05,
-                                          0.3-L1_4[i,1]*0.05, 0.2))
+  L5[i]= sample.int(3, size = 1, prob = c(0.5+L1_4[i,1]*0.05, 0.3-L1_4[i,1]*0.05, 0.2))
 }
 prob_L6 = expit_fn(0.5+L1_4[ ,3]*0.2)
 L6 = rbinom(n=n_sample, size=1, prob=prob_L6)
 L1_6 = cbind(L1_4, L5, L6)
 # Treatment indicator 
-prob_temp = expit_fn(0.3 *(L1_4[,1]+L1_4[,2]+L1_4[,3]+L1_4[,4])+0.2*ifelse(L5==1, 1, 0)
-                     +0.1*ifelse(L5==3, 1, 0) - 0.3*ifelse(L6==1, 1, 0))
+prob_temp = expit_fn(0.3 *(L1_4[,1]+L1_4[,2]+L1_4[,3]+L1_4[,4])+0.2*ifelse(L5==1, 1, 0) +0.1*ifelse(L5==3, 1, 0) - 0.3*ifelse(L6==1, 1, 0))
 A = rbinom(n=n_sample, size=1, prob=prob_temp)
 # Potential outcomes 
 part1prob = exp(-2*(L1_4[,1]+1)^2)/(exp(-2*(L1_4[,1]+1)^2)+ exp(-2*(L1_4[,1]-2)^2))
 part1 = rbinom(n=n_sample,1,part1prob)
-mu1 = (-4- 0.5*L1_4[,2]-L1_4[,3]+ 0.5*L1_4[,4]+0.3*ifelse(L5==1, 1, 0)
-       -0.3*ifelse(L5==3, 1, 0)-ifelse(L6==1, 1, 0))
-mu2 = (4+ 0.5*(L1_4[,2])^2- 0.8*(L1_4[,3])*as.numeric(L1_4[,3]>0)
-       +0.6*ifelse(L5==1, 1, 0) + 1.5*ifelse(L6==1, 1, 0))
-Y0 = (part1*rnorm(n=n_sample, mean=mu1, sd=1)
-           +(1-part1)*rnorm(n=n_sample, mean=mu2, sd=4))
+mu1 = (-4- 0.5*L1_4[,2]-L1_4[,3]+ 0.5*L1_4[,4]+0.3*ifelse(L5==1, 1, 0) -0.3*ifelse(L5==3, 1, 0)-ifelse(L6==1, 1, 0))
+mu2 = (4+ 0.5*(L1_4[,2])^2- 0.8*(L1_4[,3])*as.numeric(L1_4[,3]>0) +0.6*ifelse(L5==1, 1, 0) + 1.5*ifelse(L6==1, 1, 0))
+Y0 = (part1*rnorm(n=n_sample, mean=mu1, sd=1) +(1-part1)*rnorm(n=n_sample, mean=mu2, sd=4))
 Y1 = Y0+ ATE_true
 # Observed outcome
 Y_obs = A*Y1+ (1-A)*Y0 
+
 #####################################
 ########## Missingness ##############
 #####################################
@@ -68,6 +65,7 @@ L1_6_missing = L1_6
 for (i_p in (1:dim( L1_6)[2])){
   L1_6_missing[,i_p] = ifelse( L1_6_missing_ind[,i_p]==1, NA, L1_6[,i_p])
 }
+
 ###############################################
 ###Running proposed BNP causal model ##########
 ###############################################
@@ -75,17 +73,10 @@ obs_response = Y_obs
 Incomplete_cont_L = L1_6_missing[,1:4]
 Incomplete_cat_L = L1_6_missing[,5:6]
 n_burnin=2000; m_Imp=10; interval_btw_Imp=200
-data_obj = readData(Response_var=obs_response, trt_indicator= A, 
-                    Cont_pred=Incomplete_cont_L, Categ_pred=Incomplete_cat_L,
-                    RandomSeed=100)
-# Default mixture components: max_R_S_K = c(30, 50, 20)
-# Default hyperprior values: a_R = 0.5, b_R = 0.5, 
-# a_S = 0.5, b_S = 0.5, a_K = 0.5, b_K = 0.5,  
-# psi_0 = 1, b_theta = 100, a_tau = 0.5, b_tau = 0.5, b_delta = 100
+data_obj = readData(Response_var=obs_response, trt_indicator= A, Cont_pred=Incomplete_cont_L, Categ_pred=Incomplete_cat_L, RandomSeed=100)
 model_obj = createModel(data_obj)
-result_obj = multipleImp(data_obj= data_obj, model_obj= model_obj,
-                         n_burnin = n_burnin, m= m_Imp,
-                         interval_btw_Imp= interval_btw_Imp, show_iter=TRUE)
+result_obj = multipleImp(data_obj= data_obj, model_obj= model_obj, n_burnin = n_burnin, m= m_Imp, interval_btw_Imp= interval_btw_Imp, show_iter=TRUE)
+
 # Posterior mean and standard deviation of est. ATE from the proposed BNP causal model 
 ATE_BNP_causal = mean(result_obj$est_delta)
 SD_ATE_BNP_causal = sd(result_obj$est_delta)

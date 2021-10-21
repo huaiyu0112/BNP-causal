@@ -26,7 +26,6 @@ Sigma_L1_4 = matrix(c(1, 0.3, 0.3, 0.3,
                       0.3, 0.3, 1, 0.3, 
                       0.3, 0.3, 0.3, 1), nrow=4, ncol = 4, byrow = T)
 L1_4 = mvrnorm(n = n_sample, mu= mu_L1_4, Sigma = Sigma_L1_4)
-dimnames(L1_4)[[2]] = c("L1","L2","L3","L4")
 # Two cateogrical covariates 
 L5 = rep(0,n_sample)
 for (i in 1:n_sample){
@@ -59,7 +58,7 @@ L6_missing_ind = rbinom(n_sample, 1, expit_fn(-1.2 + 2.2*L1_4[,1] - 0.5*L1_4[,3]
 L1_6_missing_ind = cbind(L1_4_missing_ind, L5_missing_ind, L6_missing_ind)
 L1_6_missing = L1_6 
 for (i_p in (1:dim( L1_6)[2])){
-  L1_6_missing[,i_p] = ifelse( L1_6_missing_ind[,i_p]==1, NA, L1_6[,i_p])
+  L1_6_missing[,i_p] = ifelse(L1_6_missing_ind[,i_p]==1, NA, L1_6[,i_p])
 }
 
 ###############################################

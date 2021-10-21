@@ -11,13 +11,10 @@ See a sample R code of Simulation 1 for the illustration of implementing the "HC
 rm(list=ls())  
 library(MASS) # for function mvrnorm 
 library(HCMMcausal)  # for running proposed BNP causal model
-sessionInfo()
-set.seed(100)
-# Inverse of the logit function
-expit_fn = function(x) { 1/(1+exp(-x)) } 
+expit_fn = function(x) { 1/(1+exp(-x)) }  # Inverse of the logit function 
 
 ###############################################
-########## Simulated data #####################
+########## Data generation process ############
 ###############################################
 # True causal effect 
 ATE_true = 1.5
@@ -31,7 +28,7 @@ Sigma_L1_4 = matrix(c(1, 0.3, 0.3, 0.3,
                       0.3, 0.3, 0.3, 1), nrow=4, ncol = 4, byrow = T)
 L1_4 = mvrnorm(n = n_sample, mu= mu_L1_4, Sigma = Sigma_L1_4)
 dimnames(L1_4)[[2]] = c("L1","L2","L3","L4")
-# Two cateogrical confounders
+# Two cateogrical covariates 
 L5 = rep(0,n_sample)
 for (i in 1:n_sample){
   L5[i]= sample.int(3, size = 1, prob = c(0.5+L1_4[i,1]*0.05, 0.3-L1_4[i,1]*0.05, 0.2))
@@ -53,7 +50,7 @@ Y1 = Y0+ ATE_true
 Y_obs = A*Y1+ (1-A)*Y0 
 
 #####################################
-########## Missingness ##############
+## Introducing missingness ##########
 #####################################
 L1_4_missing_ind = array(0,c(n_sample,4))
 L1_4_missing_ind[,2] = rbinom(n_sample, 1, expit_fn(-1.5 + 3*L1_4[,3]))
@@ -67,7 +64,7 @@ for (i_p in (1:dim( L1_6)[2])){
 }
 
 ###############################################
-###Running proposed BNP causal model ##########
+### Running proposed BNP causal model #########
 ###############################################
 obs_response = Y_obs 
 Incomplete_cont_L = L1_6_missing[,1:4]

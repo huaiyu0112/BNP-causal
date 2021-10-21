@@ -15,8 +15,8 @@ expit_fn = function(x) { 1/(1+exp(-x)) }  # Inverse of the logit function
 ###############################################
 ########## Data generation process ############
 ###############################################
-ATE_true = 1.5 # true causal effect
-n_sample = 500 # sample size
+ATE_true = 1.5 # define true causal effect
+n_sample = 500 # define sample size
 # Generate 4 continuous covariates
 mu_L1_4 = rep(0,4)
 Sigma_L1_4 = matrix(c(1, 0.3, 0.3, 0.3,                

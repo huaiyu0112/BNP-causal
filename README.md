@@ -7,7 +7,6 @@ To run our proposed BNP causal model, (1) First, we install "HCMMcausal" package
 See a sample R code of Simulation 1 for the illustration of implementing the "HCMMcausal" package below. 
 
 ```
-#################################################################################
 rm(list=ls())  
 library(MASS) # for function mvrnorm 
 library(HCMMcausal)  # for running proposed BNP causal model
@@ -76,8 +75,7 @@ result_obj = multipleImp(data_obj= data_obj, model_obj= model_obj, n_burnin = n_
 
 # Posterior mean and standard deviation of est. ATE from the proposed BNP causal model 
 ATE_BNP_causal = mean(result_obj$est_delta)
-SD_ATE_BNP_causal = sd(result_obj$est_delta)
-#################################################################################                     
+SD_ATE_BNP_causal = sd(result_obj$est_delta)                    
 ```
 
 

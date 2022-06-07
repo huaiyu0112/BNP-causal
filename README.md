@@ -1,5 +1,5 @@
 # Introduction
-This git repository is to house R codes of simulations for the paper "A Bayesian Causal Inference Approach in Observational Studies with Missingness in Covariates and Outcomes" by Huaiyu Zang, Hang Kim, Bin Huang, and Rhonda Szczesniak. 
+This git repository is to house R codes for the paper "A Bayesian Causal Inference Approach in Observational Studies with Missingness in Covariates and Outcomes" by Huaiyu Zang, Hang Kim, Bin Huang, and Rhonda Szczesniak. Here, you can find all of our simulation codes. 
 
 # Implementing proposed model
 To run our proposed BNP causal model, 

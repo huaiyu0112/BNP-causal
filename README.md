@@ -77,4 +77,5 @@ ATE_BNP_causal = mean(result_obj$est_delta)
 SD_ATE_BNP_causal = sd(result_obj$est_delta)                    
 ```
 
-
+# Contact
+Please contact Huaiyu Zang with any questions, complaints, requests, etc. via email: huaiyuzang [at] gmail [dot] com.

@@ -1,7 +1,7 @@
-# BNP-causal
-R Codes for simulations and data analysis in Zang et.al. "A Bayesian Causal Inference Approach in Observational Studies with Missingness in Covariates and Outcomes".
+# Introduction
+This git repository is to house supplementary materials – mostly R codes of simulations – for the paper "A Bayesian Causal Inference Approach in Observational Studies with Missingness in Covariates and Outcomes" by Huaiyu Zang, Hang Kim, Bin Huang, and Rhonda Szczesniak. 
 
-
+# BNP-causal package
 To run our proposed BNP causal model, 
 - First, we install "HCMMcausal" package using "HCMMcausal_1.5.2.tar.gz" file. 
 - Second, we make the data object using readData function to load the data structure, in which we input outcome variables in "Response_var" argument, treatment indicator variable in "trt_indicator" argument, continuous covariates in "Cont_pred" argument and categorical covariates in "Categ_pred" argument. 

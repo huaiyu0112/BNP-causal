@@ -53,13 +53,13 @@ Y_obs = A*Y1+ (1-A)*Y0
 ## Introducing missingness ##########
 #####################################
 L1_4_missing_ind = array(0,c(n_sample,4))
+L1_4_missing_ind[,1] = rbinom(n_sample, 1, expit_fn(-1 + 3*L1_4[,2]))
 L1_4_missing_ind[,2] = rbinom(n_sample, 1, expit_fn(-1.5 + 3*L1_4[,3]))
 L1_4_missing_ind[,4] = rbinom(n_sample, 1, expit_fn(-1.2 - 2*L1_4[,1] - L1_4[,3]))
 L5_missing_ind = rbinom(n_sample, 1, expit_fn(-1.5 + 3*L1_4[,1] - 1.5*L1_4[,3]))
 L6_missing_ind = rbinom(n_sample, 1, expit_fn(-1.2 + 2.2*L1_4[,1] - 0.5*L1_4[,3]))
 L1_6_missing_ind = cbind(L1_4_missing_ind, L5_missing_ind, L6_missing_ind)
-L1_6_missing = L1_6 
-L1_6_missing[L1_6_missing_ind==1] = NA
+L1_6[L1_6_missing_ind==1] = NA
 
 ###############################################
 ### Running proposed BNP causal model #########

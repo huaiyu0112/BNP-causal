@@ -21,14 +21,14 @@ expit_fn = function(x) { 1/(1+exp(-x)) }  # Inverse of the logit function
 ###############################################
 ATE_true = 1.5 # define true causal effect
 n_sample = 500 # define sample size
-# Generate 4 continuous covariates
+# Generate continuous covariates L1 to L4
 mu_L1_4 = rep(0,4)
 Sigma_L1_4 = matrix(c(1, 0.3, 0.3, 0.3,                
                       0.3, 1, 0.3, 0.3, 
                       0.3, 0.3, 1, 0.3, 
                       0.3, 0.3, 0.3, 1), nrow=4, ncol = 4, byrow = T)
 L1_4 = mvrnorm(n = n_sample, mu= mu_L1_4, Sigma = Sigma_L1_4)
-# Generate 2 cateogrical covariates 
+# Generate cateogrical covariates L5 and L6
 L5 = rep(0,n_sample)
 for (i in 1:n_sample){
   L5[i]= sample.int(3, size = 1, prob = c(0.5+L1_4[i,1]*0.05, 0.3-L1_4[i,1]*0.05, 0.2))

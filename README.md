@@ -4,9 +4,9 @@ This git repository is to house R codes for the paper "A Bayesian Causal Inferen
 # Implementing proposed model
 To run our proposed BNP causal model, 
 1. Install "HCMMcausal" package using "HCMMcausal_1.5.2.tar.gz" file. 
-2. Make the data object using "readData" function to load the data structure, in which we input outcome variables in "Response_var" argument, treatment indicator variable in "trt_indicator" argument, continuous covariates in "Cont_pred" argument and categorical covariates in "Categ_pred" argument. 
-3. Make a model object using "createModel" function to load the data object. In "createModel" function, we could also specify the hyperparameters and upper bounds of mixture components. 
-4. Run "multipleImp" function for proposed BNP causal model where we load the data and model object and then save the results. In "multipleImp" function, we could input the number of burn-in iterations in "n_burnin" argument, number of multiple imputations in "m" argument, and interval (number of iterations) between imputed data in "interval_btw_Imp" argument.
+2. Make the data object using "readData" function to load the data structure, in which one can input outcome variables in "Response_var" argument, treatment indicator variable in "trt_indicator" argument, continuous covariates in "Cont_pred" argument and categorical covariates in "Categ_pred" argument. 
+3. Make a model object using "createModel" function to load the data object. In "createModel" function, one can also specify the hyperparameters and upper bounds of mixture components. 
+4. Run "multipleImp" function for proposed BNP causal model where one can load the data and model object and then save the results. In "multipleImp" function, one can input the number of burn-in iterations in "n_burnin" argument, number of multiple imputations in "m" argument, and interval (number of iterations) between imputed data in "interval_btw_Imp" argument.
 
 See a sample R code of Simulation 1 for the illustration of implementing the "HCMMcausal" package below. 
 
@@ -36,7 +36,7 @@ for (i in 1:n_sample){
 prob_L6 = expit_fn(0.5+L1_4[ ,3]*0.2)
 L6 = rbinom(n=n_sample, size=1, prob=prob_L6)
 L1_6 = cbind(L1_4, L5, L6)
-# Generate treatment indicator A given covariates 
+# Generate treatment indicator A given the covariates L1 to L6
 prob_temp = expit_fn(0.3 *(L1_4[,1]+L1_4[,2]+L1_4[,3]+L1_4[,4])+0.2*ifelse(L5==1, 1, 0) +0.1*ifelse(L5==3, 1, 0) - 0.3*ifelse(L6==1, 1, 0))
 A = rbinom(n=n_sample, size=1, prob=prob_temp)
 # Generate potential outcomes Y0 and Y1

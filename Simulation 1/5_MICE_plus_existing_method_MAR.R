@@ -5,8 +5,8 @@ library(MASS) # for "mvrnorm"
 library(mvtnorm) # for dmvnorm
 library(bartCause) # BART causal 
 library(ipw) # for ipwpoint function
-library(WeightIt)
-library(cobalt)
+library(WeightIt) # for weightit function
+library(cobalt) # for get.w function
 library(survey) # for svyglm function
 library("SuperLearner") # used cross validation to weigh different prediction algorithms for TMLE
 library(tmle) # for tmle function

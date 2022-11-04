@@ -91,7 +91,7 @@ SD_ATE_BNP_causal = sd(result_obj$est_delta)
 
 ```
 library( HCMMcausal )  # for running BNP causal 
-load("Simulation3_dataset.Rdata") 
+load("Simulation3_dataset.Rdata") # Download the data from the folder of Simulation 3
 # In this dataset, Y1 and Y2 are outcomes; TrueA denote treatment indicator, L1 to L5 are categorical covariates, L6 and L7 are continuous covariates
 # > head(Simulation3_dataset)
 #            Y1       Y2 TrueA        L6          L7 L1 L2 L3 L4 L5

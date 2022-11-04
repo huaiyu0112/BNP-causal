@@ -16,7 +16,9 @@ To run our proposed BNP causal model,
 3. Make a model object using "createModel" function to load the data object. In "createModel" function, one can also specify the hyperparameters and upper bounds of mixture components. 
 4. Run "multipleImp" function for proposed BNP causal model where one can load the data and model object and then save the results. In "multipleImp" function, one can input the number of burn-in iterations in "n_burnin" argument, number of multiple imputations in "m" argument, and interval (number of iterations) between imputed data in "interval_btw_Imp" argument.
 
-See a sample R code of Simulation 1 (in case of missing covariates) for running proposed BNP causal model. 
+# R codes Examples
+
+1. in case of missing covariates
 
 ```
 rm(list=ls())  
@@ -85,14 +87,12 @@ ATE_BNP_causal = mean(result_obj$est_delta)
 SD_ATE_BNP_causal = sd(result_obj$est_delta)                    
 ```
 
-See a sample R code of Simulation 3 (in case of both missing outcomes and covariates) 
+2. In case of both missing outcomes and covariates. 
 
 ```
 library( HCMMcausal )  # for running BNP causal 
-
 load("Simulation3_dataset.Rdata") 
-
-# > head(Simulation3_dataset )
+# > head(Simulation3_dataset)
 #            Y1       Y2 TrueA        L6          L7 L1 L2 L3 L4 L5
 # [1,] 2.794514 1.941280     0  4.499388  4.14310808  1  2  3  1  3
 # [2,]       NA 4.034288     1        NA  0.08950193  1  4  1  2  1
@@ -101,18 +101,19 @@ load("Simulation3_dataset.Rdata")
 # [5,]       NA       NA     0        NA -3.30222185  2  4  2  1  1
 # [6,]       NA       NA     1 -5.409038  1.26828624  1  1  3  1  2
 
+# BNP model specification 
 obs_response = Simulation3_dataset[, c("Y1", "Y2")]
 TrueA = Simulation3_dataset[, c("TrueA")]
 Cont_covariate = Simulation3_dataset[, c("L6", "L7")]
 Cat_covariate = Simulation3_dataset[, c("L1", "L2", "L3", "L4", "L5")]
-
 n_burnin = 2000 ; m_Imp = 10 ; interval_btw_Imp = 1000
-data_obj = readData(Response_var=obs_response, trt_indicator=TrueA, Cont_pred=Incomplete_Y, Categ_pred=Incomplete_X, RandomSeed=100+i_rep)
+data_obj = readData(Response_var=obs_response, trt_indicator=TrueA, Cont_pred=Cont_covariate, Categ_pred=Cat_covariate, RandomSeed=100)
 model_obj = createModel(data_obj)	
-result_obj = multipleImp(data_obj, model_obj, n_burnin, m_Imp, interval_btw_Imp, show_iter=FALSE)
+result_obj = multipleImp(data_obj, model_obj, n_burnin, m_Imp, interval_btw_Imp, show_iter=T)
 
-ATE_BNPc = apply(result_obj$est_delta,2,mean)
-SD_ATE_BNPc = apply(result_obj$est_delta,2,sd)
+# Saving posterior mean and standard deviation for ATE estimate
+ATE_BNPc_vec = apply(result_obj$est_delta,2,mean) # ATE_BNPc_vec[1] is ATE estimate for Y1 and ATE_BNPc_vec[2] is ATE estimate for Y2
+SD_ATE_BNPc_vec = apply(result_obj$est_delta,2,sd)
 ```
 
 

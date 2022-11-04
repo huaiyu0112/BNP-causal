@@ -18,7 +18,7 @@ To run our proposed BNP causal model,
 
 # Examples
 
-1. Running BNP causal model in case of missing covariates (Simulation 1)
+1. Running the proposed BNP model in case of missing covariates (Simulation 1)
 
 ```
 rm(list=ls())  
@@ -87,11 +87,12 @@ ATE_BNP_causal = mean(result_obj$est_delta)
 SD_ATE_BNP_causal = sd(result_obj$est_delta)                    
 ```
 
-2. Running BNP causal model in case of missing covariates and outcome (Simulation 3). 
+2. Running the proposed BNP model in case of missing covariates and outcome (Simulation 3). 
 
 ```
 library( HCMMcausal )  # for running BNP causal 
 load("Simulation3_dataset.Rdata") 
+# In this dataset, Y1 and Y2 are outcomes; TrueA denote treatment indicator, L1 to L5 are categorical covariates, L6 and L7 are continuous covariates
 # > head(Simulation3_dataset)
 #            Y1       Y2 TrueA        L6          L7 L1 L2 L3 L4 L5
 # [1,] 2.794514 1.941280     0  4.499388  4.14310808  1  2  3  1  3

@@ -16,7 +16,7 @@ To run our proposed BNP causal model,
 3. Make a model object using "createModel" function to load the data object. In "createModel" function, one can also specify the hyperparameters and upper bounds of mixture components. 
 4. Run "multipleImp" function for proposed BNP causal model where one can load the data and model object and then save the results. In "multipleImp" function, one can input the number of burn-in iterations in "n_burnin" argument, number of multiple imputations in "m" argument, and interval (number of iterations) between imputed data in "interval_btw_Imp" argument.
 
-See a sample R code of Simulation 1 (in case of missing covariates) for running proposed BNP causal model below. 
+See a sample R code of Simulation 1 (in case of missing covariates) for running proposed BNP causal model. 
 
 ```
 rm(list=ls())  
@@ -75,7 +75,7 @@ L1_6[L1_6_missing_ind==1] = NA
 obs_response = Y_obs 
 Incomplete_cont_L = L1_6_missing[,1:4]
 Incomplete_cat_L = L1_6_missing[,5:6]
-n_burnin=2000; m_Imp=10; interval_btw_Imp=200
+n_burnin = 2000 ; m_Imp = 10 ; interval_btw_Imp = 1000 #  The ATE estimate is obtained by averaging over 10,000 MCMC iterations after 2,000 burn-in iterations
 data_obj = readData(Response_var=obs_response, trt_indicator= A, Cont_pred=Incomplete_cont_L, Categ_pred=Incomplete_cat_L, RandomSeed=100)
 model_obj = createModel(data_obj)
 result_obj = multipleImp(data_obj= data_obj, model_obj= model_obj, n_burnin = n_burnin, m= m_Imp, interval_btw_Imp= interval_btw_Imp, show_iter=TRUE)
@@ -84,6 +84,37 @@ result_obj = multipleImp(data_obj= data_obj, model_obj= model_obj, n_burnin = n_
 ATE_BNP_causal = mean(result_obj$est_delta)
 SD_ATE_BNP_causal = sd(result_obj$est_delta)                    
 ```
+
+See a sample R code of Simulation 3 (in case of both missing outcomes and covariates) 
+
+```
+library( HCMMcausal )  # for running BNP causal 
+
+load("Simulation3_dataset.Rdata") 
+
+# > head(Simulation3_dataset )
+#            Y1       Y2 TrueA        L6          L7 L1 L2 L3 L4 L5
+# [1,] 2.794514 1.941280     0  4.499388  4.14310808  1  2  3  1  3
+# [2,]       NA 4.034288     1        NA  0.08950193  1  4  1  2  1
+# [3,]       NA 7.513693     0  6.707670  6.27963788  1  4  2  1  2
+# [4,]       NA       NA     0  2.288125  2.95212193  2  2  1  1  1
+# [5,]       NA       NA     0        NA -3.30222185  2  4  2  1  1
+# [6,]       NA       NA     1 -5.409038  1.26828624  1  1  3  1  2
+
+obs_response = Simulation3_dataset[, c("Y1", "Y2")]
+TrueA = Simulation3_dataset[, c("TrueA")]
+Cont_covariate = Simulation3_dataset[, c("L6", "L7")]
+Cat_covariate = Simulation3_dataset[, c("L1", "L2", "L3", "L4", "L5")]
+
+n_burnin = 2000 ; m_Imp = 10 ; interval_btw_Imp = 1000
+data_obj = readData(Response_var=obs_response, trt_indicator=TrueA, Cont_pred=Incomplete_Y, Categ_pred=Incomplete_X, RandomSeed=100+i_rep)
+model_obj = createModel(data_obj)	
+result_obj = multipleImp(data_obj, model_obj, n_burnin, m_Imp, interval_btw_Imp, show_iter=FALSE)
+
+ATE_BNPc = apply(result_obj$est_delta,2,mean)
+SD_ATE_BNPc = apply(result_obj$est_delta,2,sd)
+```
+
 
 # Contact
 Please contact Huaiyu Zang with any questions, complaints, requests, etc. via email: huaiyuzang [at] gmail [dot] com.

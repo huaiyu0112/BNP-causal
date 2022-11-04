@@ -111,7 +111,7 @@ data_obj = readData(Response_var=obs_response, trt_indicator=TrueA, Cont_pred=Co
 model_obj = createModel(data_obj)	
 result_obj = multipleImp(data_obj, model_obj, n_burnin, m_Imp, interval_btw_Imp, show_iter=T)
 
-# Saving posterior mean and standard deviation for ATE estimate
+# Saving posterior mean and standard deviation for ATE estimates
 ATE_BNPc_vec = apply(result_obj$est_delta,2,mean) # ATE_BNPc_vec[1] is ATE estimate for Y1 and ATE_BNPc_vec[2] is ATE estimate for Y2
 SD_ATE_BNPc_vec = apply(result_obj$est_delta,2,sd)
 ```

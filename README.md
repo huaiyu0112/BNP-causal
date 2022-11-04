@@ -16,9 +16,9 @@ To run our proposed BNP causal model,
 3. Make a model object using "createModel" function to load the data object. In "createModel" function, one can also specify the hyperparameters and upper bounds of mixture components. 
 4. Run "multipleImp" function for proposed BNP causal model where one can load the data and model object and then save the results. In "multipleImp" function, one can input the number of burn-in iterations in "n_burnin" argument, number of multiple imputations in "m" argument, and interval (number of iterations) between imputed data in "interval_btw_Imp" argument.
 
-# R codes Examples
+# Examples
 
-1. in case of missing covariates
+1. Running BNP causal model in case of missing covariates (Simulation 1)
 
 ```
 rm(list=ls())  
@@ -87,7 +87,7 @@ ATE_BNP_causal = mean(result_obj$est_delta)
 SD_ATE_BNP_causal = sd(result_obj$est_delta)                    
 ```
 
-2. In case of both missing outcomes and covariates. 
+2. Running BNP causal model in case of missing covariates and outcome (Simulation 3). 
 
 ```
 library( HCMMcausal )  # for running BNP causal 

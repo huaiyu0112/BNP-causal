@@ -3,7 +3,7 @@ This git repository is to house R codes for the paper "A Bayesian Causal Inferen
 
 1. Generating simulated dataset using the data-generating process in Section 3 of the paper (see 1_DATA_BD.R). 
 2. Running the proposed BNP model into the simulated data before introducing missing values (see 2_BNPc_BD.R).
-3. Introducing the missing values under missing at random assumption (see 3_DATA_MAR.R). 
+3. Generating the missing data under missing at random (MAR) assumption (see 3_DATA_MAR.R). 
 4. Running the proposed BNP model into the simulated data with missing values (see 4_BNPc_MAR.R).  
 5. Running existing causal models applied to the MICE imputed data (see 5_MICE_plus_existing_method_MAR.R). 
 6. Running complete-case analyses with existing causal models (see 6_Existing_methods_MAR.R). 

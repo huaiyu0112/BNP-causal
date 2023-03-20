@@ -87,7 +87,7 @@ ATE_BNP_causal = mean(result_obj$est_delta)
 SD_ATE_BNP_causal = sd(result_obj$est_delta)                    
 ```
 
-2. Running the proposed BNP model in case of missing covariates and outcome (Simulation 3). 
+2. Running the proposed BNP model in case of missing both covariates and outcome (Simulation 3). 
 
 ```
 library( HCMMcausal )  # for running BNP causal 

@@ -11,10 +11,10 @@ This GitHub repository is to house R codes for the paper "Bayesian causal infere
 
 # Implementing the proposed model
 To run our proposed BNP causal model, 
-1. Install the "HCMMcausal" package using the "HCMMcausal_1.5.2.tar.gz" source file. 
-2. Make the data object using "readData" function to load the data structure, in which one can input outcome variables in "Response_var" argument, treatment indicator variable in "trt_indicator" argument, continuous covariates in "Cont_pred" argument and categorical covariates in "Categ_pred" argument. 
-3. Make a model object using "createModel" function to load the data object. In "createModel" function, one can also specify the hyperparameters and upper bounds of mixture components. 
-4. Run "multipleImp" function for proposed BNP causal model where one can load the data and model object and then save the results. In "multipleImp" function, one can input the number of burn-in iterations in "n_burnin" argument, number of multiple imputations in "m" argument, and interval (number of iterations) between imputed data in "interval_btw_Imp" argument.
+1. Install the "HCMMcausal" R package using the "HCMMcausal_1.5.2.tar.gz" source file. 
+2. Make the data object using the "readData" function to load the data structure, in which one can input outcome variables in the "Response_var" argument, treatment indicator variable in the "trt_indicator" argument, continuous covariates in the "Cont_pred" argument and categorical covariates in "Categ_pred" argument. 
+3. Make a model object using the "createModel" function to load the data object. In the "createModel" function, one can also specify the hyperparameters and upper bounds of mixture components. 
+4. Run the "multipleImp" function for the proposed BNP causal model, where one can load the data and model object and then save the results. In the "multipleImp" function, one can input the number of burn-in iterations in the "n_burnin" argument, the number of multiple imputations in "m" argument, and the interval (number of iterations) between imputed data in the "interval_btw_Imp" argument.
 
 # Examples
 
@@ -23,7 +23,7 @@ To run our proposed BNP causal model,
 ```
 rm(list=ls())  
 library(MASS) # for function mvrnorm 
-library(HCMMcausal)  # for running proposed BNP causal model
+library(HCMMcausal)  # for running the proposed BNP causal model
 expit_fn = function(x) { 1/(1+exp(-x)) }  # Inverse of the logit function 
 
 ###############################################

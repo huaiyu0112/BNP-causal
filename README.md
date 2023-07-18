@@ -1,5 +1,5 @@
 # Introduction
-This git repository is to house R codes for the paper "Bayesian causal inference for Observational Studies with Missingness in Covariates and Outcomes" by Huaiyu Zang, Hang Kim, Bin Huang, and Rhonda Szczesniak. Here, you can find all of our simulation codes. Our simulation codes are structured as follows: 
+This GitHub repository is to house R codes for the paper "Bayesian causal inference for Observational Studies with Missingness in Covariates and Outcomes" by Huaiyu Zang, Hang Kim, Bin Huang, and Rhonda Szczesniak. Here, you can find all of our simulation codes. Our simulation codes are structured as follows: 
 
 1. Generating simulated dataset using the data-generating process in Section 3 of the paper (see 1_DATA_BD.R). 
 2. Running the proposed BNP model into the simulated data before introducing missing values (see 2_BNPc_BD.R).
@@ -11,7 +11,7 @@ This git repository is to house R codes for the paper "Bayesian causal inference
 
 # Implementing the proposed model
 To run our proposed BNP causal model, 
-1. Install the "HCMMcausal" package using the "HCMMcausal_1.5.2.tar.gz" file. 
+1. Install the "HCMMcausal" package using the "HCMMcausal_1.5.2.tar.gz" source file. 
 2. Make the data object using "readData" function to load the data structure, in which one can input outcome variables in "Response_var" argument, treatment indicator variable in "trt_indicator" argument, continuous covariates in "Cont_pred" argument and categorical covariates in "Categ_pred" argument. 
 3. Make a model object using "createModel" function to load the data object. In "createModel" function, one can also specify the hyperparameters and upper bounds of mixture components. 
 4. Run "multipleImp" function for proposed BNP causal model where one can load the data and model object and then save the results. In "multipleImp" function, one can input the number of burn-in iterations in "n_burnin" argument, number of multiple imputations in "m" argument, and interval (number of iterations) between imputed data in "interval_btw_Imp" argument.

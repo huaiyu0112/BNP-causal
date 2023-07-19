@@ -12,9 +12,9 @@ This GitHub repository is to house R codes for the paper "Bayesian causal infere
 # Implementing the proposed model
 To run our proposed BNP causal model, 
 1. Install the "HCMMcausal" R package using the "HCMMcausal_1.5.2.tar.gz" source file. 
-2. Make the data object using the "readData" function to load the data structure, in which one can input outcome variables in the "Response_var" argument, treatment indicator variable in the "trt_indicator" argument, continuous covariates in the "Cont_pred" argument and categorical covariates in "Categ_pred" argument. 
-3. Make a model object using the "createModel" function to load the data object. In the "createModel" function, one can also specify the hyperparameters and upper bounds of mixture components. 
-4. Run the "multipleImp" function for the proposed BNP causal model, where one can load the data and model object and then save the results. In the "multipleImp" function, one can input the number of burn-in iterations in the "n_burnin" argument, the number of multiple imputations in "m" argument, and the interval (number of iterations) between imputed data in the "interval_btw_Imp" argument.
+2. Make a data object using the "readData" function to load the data structure, in which one can input outcome variables in the "Response_var" argument, treatment indicator variable in the "trt_indicator" argument, continuous covariates in the "Cont_pred" argument and categorical covariates in the "Categ_pred" argument. 
+3. Make a model object using the "createModel" function to load the data object. In the "createModel" function, one can specify the hyperparameters and upper bounds of mixture components. 
+4. Run the "multipleImp" function for the proposed BNP causal model, where one can load the data and model objects and then save the results. In the "multipleImp" function, one can input the number of burn-in iterations in the "n_burnin" argument, the number of multiple imputations in the "m" argument, and the interval (number of iterations) between imputed data in the "interval_btw_Imp" argument.
 
 # Examples
 
@@ -38,7 +38,7 @@ Sigma_L1_4 = matrix(c(1, 0.3, 0.3, 0.3,
                       0.3, 0.3, 1, 0.3, 
                       0.3, 0.3, 0.3, 1), nrow=4, ncol = 4, byrow = T)
 L1_4 = mvrnorm(n = n_sample, mu= mu_L1_4, Sigma = Sigma_L1_4)
-# Generate cateogrical covariates L5 and L6
+# Generate categorical covariates L5 and L6
 L5 = rep(0,n_sample)
 for (i in 1:n_sample){
   L5[i]= sample.int(3, size = 1, prob = c(0.5+L1_4[i,1]*0.05, 0.3-L1_4[i,1]*0.05, 0.2))
@@ -119,4 +119,4 @@ SD_ATE_BNPc_vec = apply(result_obj$est_delta,2,sd)
 
 
 # Contact
-Please contact Huaiyu Zang with any questions, complaints, requests, etc. via email: huaiyuzang [at] gmail [dot] com.
+Don't hesitate to contact Huaiyu Zang with any questions, complaints, requests, etc., via email: huaiyuzang [at] gmail [dot] com.
